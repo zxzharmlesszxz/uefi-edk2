@@ -130,6 +130,7 @@ InitializePcatIsaAcpiDeviceList (
     CopyMem (&gPcatIsaAcpiDeviceList[Index], &mPcatIsaAcpiPs2MouseDevice, sizeof(mPcatIsaAcpiPs2MouseDevice));
     Index++;
   }
+#ifdef NOT_BHYVE
   if (PcdGetBool (PcdIsaAcpiFloppyAEnable)) {
     CopyMem (&gPcatIsaAcpiDeviceList[Index], &mPcatIsaAcpiFloppyADevice, sizeof(mPcatIsaAcpiFloppyADevice));
     Index++;
@@ -138,6 +139,7 @@ InitializePcatIsaAcpiDeviceList (
     CopyMem (&gPcatIsaAcpiDeviceList[Index], &mPcatIsaAcpiFloppyBDevice, sizeof(mPcatIsaAcpiFloppyBDevice));
     Index++;
   }
+#endif
 }
 
 //

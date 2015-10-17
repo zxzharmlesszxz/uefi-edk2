@@ -1067,7 +1067,9 @@
   #  0x0F (EFI_WHITE)<BR>
   # @Prompt Foreground color for highlighted browser field.
   # @ValidRange 0x80000004 | 0x00 - 0x0F
-  gEfiMdeModulePkgTokenSpaceGuid.PcdBrowserFieldTextHighlightColor|0x07|UINT8|0x00010059
+### NOT_BHYVE : for bhyve use 0x0A for highlighting.
+  #gEfiMdeModulePkgTokenSpaceGuid.PcdBrowserFieldTextHighlightColor|0x07|UINT8|0x00010059
+  gEfiMdeModulePkgTokenSpaceGuid.PcdBrowserFieldTextHighlightColor|0x0A|UINT8|0x00010059
   
   ## Specify the background color for highlighted prompt and Question value text in HII Form Browser.
   #  The default value is EFI_BACKGROUND_BLACK. Only following values defined in UEFI specification are valid:<BR><BR>

@@ -1,0 +1,67 @@
+#
+#  Copyright (c) 2006 - 2013, Intel Corporation. All rights reserved.<BR>
+#  Copyright (c) 2014, Pluribus Networks, Inc.
+#
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = BhyvePkg
+  PACKAGE_GUID                   = a68f96c3-6040-11e4-83ce-4437e6b8ac70
+  PACKAGE_VERSION                = 0.1
+
+[Includes]
+  Include
+
+[LibraryClasses]
+  ##  @libraryclass  Save and restore variables using a file
+  #
+  NvVarsFileLib|Include/Library/NvVarsFileLib.h
+
+  ##  @libraryclass  Serialize (and deserialize) variables
+  #
+  SerializeVariablesLib|Include/Library/SerializeVariablesLib.h
+
+  ##  @libraryclass  Access bhyve's firmware control interface
+  #
+  BhyveFwCtlLib|Include/Library/BhyveFwCtlLib.h
+  
+[Guids]
+  gUefiBhyvePkgTokenSpaceGuid      = {0x93bb96af, 0xb9f2, 0x4eb8, {0x94, 0x62, 0xe0, 0xba, 0x74, 0x56, 0x42, 0x36}}
+
+[PcdsFixedAtBuild]
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveMemFvBase|0x0|UINT32|0
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveMemFvSize|0x0|UINT32|1
+
+  ## This flag is used to control the destination port for PlatformDebugLibIoPort
+  #gUefiBhyvePkgTokenSpaceGuid.PcdDebugIoPort|0x220|UINT16|4
+  gUefiBhyvePkgTokenSpaceGuid.PcdDebugIoPort|0x2F8|UINT16|4
+
+  ## This flag determines the Power Management Base Address of choice, written
+  #  to PIIX4 function 3 offset 0x40-0x43 bits [15:6].
+  gUefiBhyvePkgTokenSpaceGuid.PcdAcpiPmBaseAddress|0xB000|UINT16|5
+
+[PcdsFixedAtBuild]
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveFlashNvStorageEventLogBase|0x0|UINT32|0x8
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveFlashNvStorageEventLogSize|0x0|UINT32|0x9
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveFirmwareFdSize|0x0|UINT32|0xa
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveFirmwareBlockSize|0|UINT32|0xb
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveFlashNvStorageVariableBase|0x0|UINT32|0xc
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveFlashNvStorageFtwSpareBase|0x0|UINT32|0xd
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveFlashNvStorageFtwWorkingBase|0x0|UINT32|0xe
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveFdBaseAddress|0x0|UINT32|0xf
+
+[PcdsDynamic, PcdsDynamicEx]
+  gUefiBhyvePkgTokenSpaceGuid.PcdEmuVariableEvent|0|UINT64|2
+  gUefiBhyvePkgTokenSpaceGuid.PcdBhyveFlashVariablesEnable|FALSE|BOOLEAN|0x10
+
+[PcdsFeatureFlag]
+  gUefiBhyvePkgTokenSpaceGuid.PcdSecureBootEnable|FALSE|BOOLEAN|3

@@ -307,6 +307,10 @@ DEFINE SOURCERY_CYGWIN_TOOLS = /cygdrive/c/Program Files/CodeSourcery/Sourcery G
 #                             Required to build platforms or ACPI tables:
 #                               Intel(r) ACPI Compiler v20101013 from
 #                               http://www.acpica.org/downloads/previous_releases.php
+#   FBSDGCC     -FreeBSD-  Requires:
+#                             GCC 4.8
+#                             Intel(r) ACPI Compiler iasl from the base system.
+#			      TODO: there needs to be a ports version of acpi tools v20101013.
 #   GCC44       -Linux,Windows-  Requires:
 #                             GCC 4.4 targeting x86_64-linux-gnu
 #                        Optional:
@@ -4002,6 +4006,57 @@ DEFINE GCC49_AARCH64_ASLDLINK_FLAGS  = DEF(GCC_ARM_AARCH64_ASLDLINK_FLAGS)
 *_UNIXGCC_IPF_OBJCOPY_FLAGS        = DEF(GCC_IPF_OBJCOPY_FLAGS)
 *_UNIXGCC_IPF_SYMRENAME_FLAGS      = DEF(GCC_IPF_SYMRENAME_FLAGS)
 *_UNIXGCC_IPF_RC_FLAGS             = DEF(GCC_IPF_RC_FLAGS)
+
+####################################################################################
+#
+# FreeBSD GCC And Intel Linux ACPI Compiler
+#
+####################################################################################
+#   FBSDGCC         - FreeBSD GCC, currently gcc 4.8
+#   ASL             - Intel Linux ACPI Source Language Compiler (iasl)
+*_FBSDGCC_*_*_FAMILY               = GCC
+
+*_FBSDGCC_*_MAKE_PATH              = /usr/local/bin/gmake
+*_FBSDGCC_*_ASL_PATH               = /usr/sbin/iasl
+
+*_FBSDGCC_X64_DLINK_FLAGS          = DEF(GCC_IA32_X64_DLINK_FLAGS) --image-base=0
+*_FBSDGCC_X64_ASLDLINK_FLAGS       = DEF(GCC_IA32_X64_ASLDLINK_FLAGS)
+*_FBSDGCC_*_ASM_FLAGS              = DEF(GCC_ASM_FLAGS)
+*_FBSDGCC_*_PP_FLAGS               = DEF(GCC_PP_FLAGS)
+*_FBSDGCC_*_ASLPP_FLAGS            = DEF(GCC_ASLPP_FLAGS)
+*_FBSDGCC_*_ASLCC_FLAGS            = DEF(GCC_ASLCC_FLAGS)
+*_FBSDGCC_*_VFRPP_FLAGS            = DEF(GCC_VFRPP_FLAGS)
+*_FBSDGCC_*_APP_FLAGS              =
+*_FBSDGCC_*_ASL_FLAGS              = DEF(IASL_FLAGS)
+*_FBSDGCC_*_ASL_OUTFLAGS           = DEF(IASL_OUTFLAGS)
+
+##################
+# No FreeBSD IA32 definitions
+##################
+
+##################
+# X64 definitions
+##################
+# Env vars are needed for other locations in the build (e.g. tools)
+*_FBSDGCC_X64_OBJCOPY_PATH         = ENV(OBJCOPY)
+*_FBSDGCC_X64_CC_PATH              = ENV(CC)
+*_FBSDGCC_X64_SLINK_PATH           = ENV(AR)
+*_FBSDGCC_X64_DLINK_PATH           = ENV(LD)
+*_FBSDGCC_X64_ASLDLINK_PATH        = ENV(LD)
+*_FBSDGCC_X64_ASM_PATH             = ENV(CC)
+*_FBSDGCC_X64_PP_PATH              = ENV(CC)
+*_FBSDGCC_X64_VFRPP_PATH           = ENV(CC)
+*_FBSDGCC_X64_ASLCC_PATH           = ENV(CC)
+*_FBSDGCC_X64_ASLPP_PATH           = ENV(CC)
+*_FBSDGCC_X64_RC_PATH              = ENV(OBJCOPY)
+
+*_FBSDGCC_X64_ASLCC_FLAGS          = DEF(GCC_ASLCC_FLAGS) -m64
+*_FBSDGCC_X64_ASLDLINK_FLAGS       = DEF(GCC48_IA32_X64_ASLDLINK_FLAGS) -m elf_x86_64
+*_FBSDGCC_X64_ASM_FLAGS            = DEF(GCC48_ASM_FLAGS) -m64
+*_FBSDGCC_X64_CC_FLAGS             = DEF(GCC48_X64_CC_FLAGS)
+*_FBSDGCC_X64_DLINK_FLAGS          = DEF(GCC48_X64_DLINK_FLAGS)
+*_FBSDGCC_X64_RC_FLAGS             = DEF(GCC_X64_RC_FLAGS)
+*_FBSDGCC_X64_OBJCOPY_FLAGS        = 
 
 
 ####################################################################################

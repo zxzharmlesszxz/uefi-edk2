@@ -259,6 +259,39 @@ LegacyBiosBuildBbs (
     }
   }
 
+#ifndef NOT_BHYVE
+  /*
+   */
+  BbsTable[5].BootPriority = BBS_UNPRIORITIZED_ENTRY;
+  BbsTable[5].Bus                       = 0xff;
+  BbsTable[5].Device                    = 0xff;
+  BbsTable[5].Function                  = 0xff;
+  BbsTable[5].DeviceType                = BBS_CDROM;
+  BbsTable[5].Class                     = 01;	/* Mass storage controller */
+  BbsTable[5].SubClass                  = 0x80;	/* Other mass storage controller*/
+  BbsTable[5].StatusFlags.OldPosition   = 0;
+  BbsTable[5].StatusFlags.Reserved1     = 0;
+  BbsTable[5].StatusFlags.Enabled       = 0;
+  BbsTable[5].StatusFlags.Failed        = 0;
+  BbsTable[5].StatusFlags.MediaPresent  = 0;
+  BbsTable[5].StatusFlags.Reserved2     = 0;
+
+  /*
+   */
+  BbsTable[6].BootPriority = BBS_UNPRIORITIZED_ENTRY;
+  BbsTable[6].Bus                       = 0xff;
+  BbsTable[6].Device                    = 0xff;
+  BbsTable[6].Function                  = 0xff;
+  BbsTable[6].DeviceType                = BBS_HARDDISK;
+  BbsTable[6].Class                     = 01;	/* Mass storage controller */
+  BbsTable[6].SubClass                  = 0x80;	/* Other mass storage controller*/
+  BbsTable[6].StatusFlags.OldPosition   = 0;
+  BbsTable[6].StatusFlags.Reserved1     = 0;
+  BbsTable[6].StatusFlags.Enabled       = 0;
+  BbsTable[6].StatusFlags.Failed        = 0;
+  BbsTable[6].StatusFlags.MediaPresent  = 0;
+  BbsTable[6].StatusFlags.Reserved2     = 0;
+#endif
   return EFI_SUCCESS;
 
 }

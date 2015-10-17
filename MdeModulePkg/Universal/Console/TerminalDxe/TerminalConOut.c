@@ -21,6 +21,7 @@ WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 //
 //
 UNICODE_TO_CHAR  UnicodeToPcAnsiOrAscii[] = {
+#ifdef NOT_BHYVE
   { BOXDRAW_HORIZONTAL,                 0xc4, L'-' },
   { BOXDRAW_VERTICAL,                   0xb3, L'|' },
   { BOXDRAW_DOWN_RIGHT,                 0xda, L'/' },
@@ -74,6 +75,61 @@ UNICODE_TO_CHAR  UnicodeToPcAnsiOrAscii[] = {
   { ARROW_UP,                           0x18, L'^' },
   { ARROW_RIGHT,                        0x3e, L'>' },
   { ARROW_DOWN,                         0x19, L'v' },
+#else
+  { BOXDRAW_HORIZONTAL,                 'q', L'-' },
+  { BOXDRAW_VERTICAL,                   'x', L'|' },
+  { BOXDRAW_DOWN_RIGHT,                 'l', L'/' },
+  { BOXDRAW_DOWN_LEFT,                  'k', L'\\' },
+  { BOXDRAW_UP_RIGHT,                   'm', L'\\' },
+  { BOXDRAW_UP_LEFT,                    'j', L'/' },
+  { BOXDRAW_VERTICAL_RIGHT,             'x', L'|' },
+  { BOXDRAW_VERTICAL_LEFT,              'x', L'|' },
+  { BOXDRAW_DOWN_HORIZONTAL,            'w', L'+' },
+  { BOXDRAW_UP_HORIZONTAL,              'v', L'+' },
+  { BOXDRAW_VERTICAL_HORIZONTAL,        'n', L'+' },
+  { BOXDRAW_DOUBLE_HORIZONTAL,          'q', L'-' },
+  { BOXDRAW_DOUBLE_VERTICAL,            'x', L'|' },
+  { BOXDRAW_DOWN_RIGHT_DOUBLE,          'l', L'/' },
+  { BOXDRAW_DOWN_DOUBLE_RIGHT,          'l', L'/' },
+  { BOXDRAW_DOUBLE_DOWN_RIGHT,          'l', L'/' },
+  { BOXDRAW_DOWN_LEFT_DOUBLE,           'k', L'\\' },
+  { BOXDRAW_DOWN_DOUBLE_LEFT,           'k', L'\\' },
+  { BOXDRAW_DOUBLE_DOWN_LEFT,           'k', L'\\' },
+  { BOXDRAW_UP_RIGHT_DOUBLE,            'm', L'\\' },
+  { BOXDRAW_UP_DOUBLE_RIGHT,            'm', L'\\' },
+  { BOXDRAW_DOUBLE_UP_RIGHT,            'm', L'\\' },
+  { BOXDRAW_UP_LEFT_DOUBLE,             'j', L'/' },
+  { BOXDRAW_UP_DOUBLE_LEFT,             'j', L'/' },
+  { BOXDRAW_DOUBLE_UP_LEFT,             'j', L'/' },
+  { BOXDRAW_VERTICAL_RIGHT_DOUBLE,      't', L'|' },
+  { BOXDRAW_VERTICAL_DOUBLE_RIGHT,      't', L'|' },
+  { BOXDRAW_DOUBLE_VERTICAL_RIGHT,      't', L'|' },
+  { BOXDRAW_VERTICAL_LEFT_DOUBLE,       'u', L'|' },
+  { BOXDRAW_VERTICAL_DOUBLE_LEFT,       'u', L'|' },
+  { BOXDRAW_DOUBLE_VERTICAL_LEFT,       'u', L'|' },
+  { BOXDRAW_DOWN_HORIZONTAL_DOUBLE,     'w', L'+' },
+  { BOXDRAW_DOWN_DOUBLE_HORIZONTAL,     'w', L'+' },
+  { BOXDRAW_DOUBLE_DOWN_HORIZONTAL,     'w', L'+' },
+  { BOXDRAW_UP_HORIZONTAL_DOUBLE,       'v', L'+' },
+  { BOXDRAW_UP_DOUBLE_HORIZONTAL,       'v', L'+' },
+  { BOXDRAW_DOUBLE_UP_HORIZONTAL,       'v', L'+' },
+  { BOXDRAW_VERTICAL_HORIZONTAL_DOUBLE, 'n', L'+' },
+  { BOXDRAW_VERTICAL_DOUBLE_HORIZONTAL, 'n', L'+' },
+  { BOXDRAW_DOUBLE_VERTICAL_HORIZONTAL, 'n', L'+' },
+
+  { BLOCKELEMENT_FULL_BLOCK,            '_', L'*' },
+  { BLOCKELEMENT_LIGHT_SHADE,           'a', L'+' },
+
+  { GEOMETRICSHAPE_UP_TRIANGLE,         0x00, L'^' },
+  { GEOMETRICSHAPE_RIGHT_TRIANGLE,      0x00, L'>' },
+  { GEOMETRICSHAPE_DOWN_TRIANGLE,       0x00, L'v' },
+  { GEOMETRICSHAPE_LEFT_TRIANGLE,       0x00, L'<' },
+
+  { ARROW_LEFT,                         0x00, L'<' },
+  { ARROW_UP,                           0x00, L'^' },
+  { ARROW_RIGHT,                        0x00, L'>' },
+  { ARROW_DOWN,                         0x00, L'v' },
+#endif
 
   { 0x0000,                             0x00, L'\0' }
 };
@@ -143,7 +199,9 @@ TerminalConOutReset (
     }
   }
 
+#ifdef NOT_BHYVE
   This->SetAttribute (This, EFI_TEXT_ATTR (This->Mode->Attribute & 0x0F, EFI_BLACK));
+#endif
 
   Status = This->SetMode (This, 0);
 
@@ -183,6 +241,9 @@ TerminalConOutOutputString (
   UTF8_CHAR                   Utf8Char;
   CHAR8                       GraphicChar;
   CHAR8                       AsciiChar;
+#ifndef NOT_BHYVE
+  CHAR8                       GraphicSeq[8];
+#endif
   EFI_STATUS                  Status;
   UINT8                       ValidBytes;
   //
@@ -246,8 +307,12 @@ TerminalConOutOutputString (
 
         AsciiChar = GraphicChar;
 
+#ifndef NOT_BHYVE
+        GraphicChar = 0;
+#endif
       }
 
+#ifdef NOT_BHYVE
       if (TerminalDevice->TerminalType != PCANSITYPE) {
         GraphicChar = AsciiChar;
       }
@@ -259,6 +324,34 @@ TerminalConOutOutputString (
                                           &Length,
                                           &GraphicChar
                                           );
+#else
+      if (TerminalDevice->TerminalType == PCANSITYPE) {
+        GraphicSeq[0] = AsciiChar;
+        Length = 1;
+      } else {
+        if (GraphicChar == 0) {
+          GraphicSeq[0] = AsciiChar;
+          Length = 1;
+        } else {
+          // For graphical characters, change to DEC G0 set and write
+          // character, followed by reset to ASCII character set
+          GraphicSeq[0] = 0x1b;
+          GraphicSeq[1] = '(';
+          GraphicSeq[2] = '0';
+          GraphicSeq[3] = GraphicChar;
+          GraphicSeq[4] = 0x1b;
+          GraphicSeq[5] = '(';
+          GraphicSeq[6] = 'B';
+          Length = 7;
+        }
+      }
+
+      Status = TerminalDevice->SerialIo->Write (
+                                          TerminalDevice->SerialIo,
+                                          &Length,
+                                          GraphicSeq
+                                          );
+#endif
 
       if (EFI_ERROR (Status)) {
         goto OutputError;
@@ -543,6 +636,7 @@ TerminalConOutSetAttribute (
   //  convert Attribute value to terminal emulator
   //  understandable foreground color
   //
+#ifdef NOT_BHYVE
   switch (Attribute & 0x07) {
 
   case EFI_BLACK:
@@ -580,12 +674,14 @@ TerminalConOutSetAttribute (
     break;
 
   }
+#endif
   //
   //  bit4 of the Attribute indicates bright control
   //  of terminal emulator.
   //
   BrightControl = (UINT8) ((Attribute >> 3) & 1);
 
+#ifdef NOT_BHYVE
   //
   //  convert Attribute value to terminal emulator
   //  understandable background color.
@@ -626,6 +722,19 @@ TerminalConOutSetAttribute (
     BackgroundControl = 47;
     break;
   }
+#endif
+
+#ifndef NOT_BHYVE
+  if (Attribute == 0x0A)
+    ForegroundControl = 31;  /* Highlighted item */
+  else if (BrightControl)
+    ForegroundControl = 32;  /* Bright item */
+  else
+    ForegroundControl = 39;  /* Remove color attr for everything else */
+  BackgroundControl = 49;
+#endif
+
+
   //
   // terminal emulator's control sequence to set attributes
   //

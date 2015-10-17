@@ -1048,7 +1048,9 @@ GenericLegacyBoot (
   // We must build IDE data, if it hasn't been done, before PciShadowRoms
   // to insure EFI drivers are connected.
   //
+#ifdef NOT_BHYVE
   LegacyBiosBuildIdeData (Private, &HddInfo, 1);
+#endif
   UpdateAllIdentifyDriveData (Private);
 
   //
@@ -1082,7 +1084,9 @@ GenericLegacyBoot (
   //
   //  WARNING: PciIo is gone after this call.
   //
+#ifdef NOT_BHYVE
   PciShadowRoms (Private);
+#endif
 
   //
   // Shadow PXE base code, BIS etc.
@@ -1117,6 +1121,46 @@ GenericLegacyBoot (
     &BbsCount,
     &LocalBbsTable
     );
+
+#ifndef NOT_BHYVE
+  DEBUG ((EFI_D_INFO, "GenericLegacyBoot: bbs count %d\n", BbsCount));
+  {
+    BDA_STRUC              *Bda;
+    UINTN                  Index, Count;
+    EFI_BLOCK_IO_PROTOCOL  *BlockIo;
+
+    // Update Bda disk count based on number of non-cdrom block devices
+    Bda = (BDA_STRUC *) ((UINTN) 0x400);
+
+    Status = gBS->LocateHandleBuffer (
+                   ByProtocol,
+                   &gEfiBlockIoProtocolGuid,
+                   NULL,
+                   &HandleCount,
+                   &HandleBuffer
+                   );
+    if (EFI_ERROR(Status)) {
+      return Status;
+    }
+
+    for (Count = 0, Index = 0; Index < HandleCount; Index++) {
+      Status = gBS->HandleProtocol (
+                     HandleBuffer[Index],
+                     &gEfiBlockIoProtocolGuid,
+                     (VOID **) &BlockIo
+                     );
+      if (EFI_ERROR (Status)) {
+        continue;
+      }
+
+      if (!BlockIo->Media->RemovableMedia)
+        Count++;
+    }
+
+    DEBUG ((EFI_D_INFO, "GenericLegacyBoot: Bda drive count %d\n", Count));
+    Bda->NumberOfDrives = (UINT8) Count;
+  }                                                                             
+#endif
 
   DEBUG_CODE (
     PrintPciInterruptRegister ();
@@ -1587,6 +1631,7 @@ EfiMemoryTypeToE820Type (
   IN  UINT32    Type
   )
 {
+#ifdef NOT_BHYVE
   switch (Type) {
   case EfiLoaderCode:
   case EfiLoaderData:
@@ -1619,6 +1664,37 @@ EfiMemoryTypeToE820Type (
   default:
     return EfiAcpiAddressRangeReserved;
   }
+#else
+  switch (Type) {
+  case EfiConventionalMemory:
+    return EfiAcpiAddressRangeMemory;
+
+  case EfiLoaderCode:
+  case EfiLoaderData:
+  case EfiBootServicesCode:
+  case EfiBootServicesData:
+  case EfiRuntimeServicesCode:
+  case EfiRuntimeServicesData:
+  case EfiACPIReclaimMemory:
+    return EfiAcpiAddressRangeACPI;
+
+  case EfiACPIMemoryNVS:
+    return EfiAcpiAddressRangeNVS;
+
+  //
+  // All other types map to reserved.
+  // Adding the code just waists FLASH space.
+  //
+  //  case  EfiReservedMemoryType:
+  //  case  EfiUnusableMemory:
+  //  case  EfiMemoryMappedIO:
+  //  case  EfiMemoryMappedIOPortSpace:
+  //  case  EfiPalCode:
+  //
+  default:
+    return EfiAcpiAddressRangeReserved;
+  }
+#endif
 }
 
 /**
@@ -1780,6 +1856,12 @@ LegacyBiosBuildE820 (
       // Convert memory type to E820 type
       //
       TempType = EfiMemoryTypeToE820Type (EfiEntry->Type);
+#ifndef NOT_BHYVE
+      if (EfiEntry->PhysicalStart == 0x00000800000) {
+        // Throw this one on the heap of usable memory.
+        TempType = EfiAcpiAddressRangeMemory;
+      }
+#endif
 
       if ((E820Table[Index].Type == TempType) && (EfiEntry->PhysicalStart == (E820Table[Index].BaseAddr + E820Table[Index].Length))) {
         //

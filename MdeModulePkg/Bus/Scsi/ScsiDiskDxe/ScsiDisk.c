@@ -1579,7 +1579,6 @@ CheckTargetStatus (
 
   case EFI_EXT_SCSI_STATUS_TARGET_RESERVATION_CONFLICT:
     return EFI_DEVICE_ERROR;
-    break;
 
   default:
     return EFI_SUCCESS;
@@ -1762,6 +1761,13 @@ ParseInquiryData (
 {
   ScsiDiskDevice->FixedDevice               = (BOOLEAN) ((ScsiDiskDevice->InquiryData.Rmb == 1) ? 0 : 1);
   ScsiDiskDevice->BlkIoMedia.RemovableMedia = (BOOLEAN) (!ScsiDiskDevice->FixedDevice);
+#ifndef NOT_BHYVE
+  switch (ScsiDiskDevice->InquiryData.Peripheral_Type) {
+  case EFI_SCSI_TYPE_CDROM:
+    ScsiDiskDevice->BlkIoMedia.ReadOnly = TRUE;
+    break;
+  }
+#endif
 }
 
 /**

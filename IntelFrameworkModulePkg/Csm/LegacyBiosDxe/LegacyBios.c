@@ -1060,6 +1060,7 @@ LegacyBiosInstall (
   //
   // Allocate high PMM Memory under 16 MB
   //   
+#ifdef NOT_BHYVE
   Status = AllocateLegacyMemory (
              AllocateMaxAddress,
              0x1000000,
@@ -1077,6 +1078,17 @@ LegacyBiosInstall (
                &MemoryAddress
                );    
   }
+#else
+  //
+  // Allocate high PMM Memory under 4GB
+  //
+  Status = AllocateLegacyMemory (
+             AllocateMaxAddress,
+             0xFFFFFFFF,
+             EFI_SIZE_TO_PAGES (MemorySize),
+             &MemoryAddress
+             );
+#endif
   if (!EFI_ERROR (Status)) {
     EfiToLegacy16InitTable->HiPmmMemory            = (UINT32) (EFI_PHYSICAL_ADDRESS) (UINTN) MemoryAddress;
     EfiToLegacy16InitTable->HiPmmMemorySizeInBytes = MemorySize;

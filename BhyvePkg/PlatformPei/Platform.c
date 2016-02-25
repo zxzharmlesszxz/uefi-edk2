@@ -225,7 +225,7 @@ MiscInitialization (
   //
   // Build the CPU hob with 36-bit addressing and 16-bits of IO space.
   //
-  BuildCpuHob (36, 16);
+  BuildCpuHob (mPhysMemAddressWidth, 16);
 
   //
   // If PMREGMISC/PMIOSE is set, assume the ACPI PMBA has been configured (for
@@ -342,6 +342,8 @@ InitializePlatform (
   DEBUG ((EFI_D_ERROR, "Platform PEIM Loaded\n"));
 
   DebugDumpCmos ();
+
+  AddressWidthInitialization ();
 
   TopOfMemory = MemDetect ();
 

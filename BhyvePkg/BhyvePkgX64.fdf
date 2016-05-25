@@ -380,6 +380,8 @@ INF  IntelFrameworkModulePkg/Csm/LegacyBiosDxe/LegacyBiosDxe.inf
 INF  RuleOverride=CSM BhyvePkg/Csm/BhyveCsm16/BhyveCsm16.inf
 !endif
 
+INF  BhyvePkg/BhyveGopDxe/BhyveGopDxe.inf
+
 
 ################################################################################
 

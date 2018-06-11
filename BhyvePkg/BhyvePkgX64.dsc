@@ -438,6 +438,7 @@
 
   OvmfPkg/VirtioPciDeviceDxe/VirtioPciDeviceDxe.inf
   OvmfPkg/VirtioBlkDxe/VirtioBlk.inf
+  OvmfPkg/VirtioScsiDxe/VirtioScsi.inf
   BhyvePkg/EmuVariableFvbRuntimeDxe/Fvb.inf {
     <LibraryClasses>
       PlatformFvbLib|BhyvePkg/Library/EmuVariableFvbLib/EmuVariableFvbLib.inf
@@ -544,6 +545,9 @@
   DuetPkg/SataControllerDxe/SataControllerDxe.inf
   MdeModulePkg/Bus/Ata/AtaAtapiPassThru/AtaAtapiPassThru.inf
   MdeModulePkg/Bus/Ata/AtaBusDxe/AtaBusDxe.inf
+
+  # NVME
+  MdeModulePkg/Bus/Pci/NvmExpressDxe/NvmExpressDxe.inf
 !endif
 
 !ifdef $(CSM_ENABLE)

@@ -60,7 +60,8 @@
 #define IAPC_BOOT_ARCH  0x12	/* 8042 present, disable PCIe ASPM */
 #define FACP_FLAGS	(EFI_ACPI_1_0_WBINVD | EFI_ACPI_1_0_PROC_C1 |	      \
 			EFI_ACPI_1_0_SLP_BUTTON | EFI_ACPI_1_0_TMR_VAL_EXT |  \
-			EFI_ACPI_2_0_RESET_REG_SUP)
+			EFI_ACPI_2_0_RESET_REG_SUP |			      \
+			EFI_ACPI_3_0_FORCE_APIC_PHYSICAL_DESTINATION_MODE)
 #define	FACP_RESET_REG	{						\
 	EFI_ACPI_3_0_SYSTEM_IO,		/* Address Space ID */		\
 	8,				/* Bit Width */			\

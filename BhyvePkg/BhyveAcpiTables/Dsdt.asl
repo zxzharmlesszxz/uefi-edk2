@@ -106,17 +106,327 @@ DefinitionBlock ("DSDT.aml", "DSDT", 2, "BHYVE", "BVDSDT", 0x00000001)
             })
             Name (PPRT, Package ()
             {
-                Package () { 0x0003FFFF, Zero, LPC.LNKA, Zero }, 
-                Package () { 0x0004FFFF, Zero, LPC.LNKB, Zero },
-                Package () { 0x0005FFFF, Zero, LPC.LNKC, Zero },
-                Package () { 0x0006FFFF, Zero, LPC.LNKD, Zero }
+                Package () { 0x0000FFFF, 0, LPC.LNKF, Zero },
+                Package () { 0x0000FFFF, 1, LPC.LNKG, Zero },
+                Package () { 0x0000FFFF, 2, LPC.LNKH, Zero },
+                Package () { 0x0000FFFF, 3, LPC.LNKA, Zero },
+
+                Package () { 0x0001FFFF, 0, LPC.LNKG, Zero },
+                Package () { 0x0001FFFF, 1, LPC.LNKH, Zero },
+                Package () { 0x0001FFFF, 2, LPC.LNKA, Zero },
+                Package () { 0x0001FFFF, 3, LPC.LNKB, Zero },
+
+                Package () { 0x0002FFFF, 0, LPC.LNKH, Zero },
+                Package () { 0x0002FFFF, 1, LPC.LNKA, Zero },
+                Package () { 0x0002FFFF, 2, LPC.LNKB, Zero },
+                Package () { 0x0002FFFF, 3, LPC.LNKC, Zero },
+
+                Package () { 0x0003FFFF, 0, LPC.LNKA, Zero },
+                Package () { 0x0003FFFF, 1, LPC.LNKB, Zero },
+                Package () { 0x0003FFFF, 2, LPC.LNKC, Zero },
+                Package () { 0x0003FFFF, 3, LPC.LNKD, Zero },
+
+                Package () { 0x0004FFFF, 0, LPC.LNKB, Zero },
+                Package () { 0x0004FFFF, 1, LPC.LNKC, Zero },
+                Package () { 0x0004FFFF, 2, LPC.LNKD, Zero },
+                Package () { 0x0004FFFF, 3, LPC.LNKE, Zero },
+
+                Package () { 0x0005FFFF, 0, LPC.LNKC, Zero },
+                Package () { 0x0005FFFF, 1, LPC.LNKD, Zero },
+                Package () { 0x0005FFFF, 2, LPC.LNKE, Zero },
+                Package () { 0x0005FFFF, 3, LPC.LNKF, Zero },
+
+                Package () { 0x0006FFFF, 0, LPC.LNKD, Zero },
+                Package () { 0x0006FFFF, 1, LPC.LNKE, Zero },
+                Package () { 0x0006FFFF, 2, LPC.LNKF, Zero },
+                Package () { 0x0006FFFF, 3, LPC.LNKG, Zero },
+
+                Package () { 0x0007FFFF, 0, LPC.LNKE, Zero },
+                Package () { 0x0007FFFF, 1, LPC.LNKF, Zero },
+                Package () { 0x0007FFFF, 2, LPC.LNKG, Zero },
+                Package () { 0x0007FFFF, 3, LPC.LNKH, Zero },
+
+                Package () { 0x0008FFFF, 0, LPC.LNKF, Zero },
+                Package () { 0x0008FFFF, 1, LPC.LNKG, Zero },
+                Package () { 0x0008FFFF, 2, LPC.LNKH, Zero },
+                Package () { 0x0008FFFF, 3, LPC.LNKA, Zero },
+
+                Package () { 0x0009FFFF, 0, LPC.LNKG, Zero },
+                Package () { 0x0009FFFF, 1, LPC.LNKH, Zero },
+                Package () { 0x0009FFFF, 2, LPC.LNKA, Zero },
+                Package () { 0x0009FFFF, 3, LPC.LNKB, Zero },
+
+                Package () { 0x000AFFFF, 0, LPC.LNKH, Zero },
+                Package () { 0x000AFFFF, 1, LPC.LNKA, Zero },
+                Package () { 0x000AFFFF, 2, LPC.LNKB, Zero },
+                Package () { 0x000AFFFF, 3, LPC.LNKC, Zero },
+
+                Package () { 0x000BFFFF, 0, LPC.LNKA, Zero },
+                Package () { 0x000BFFFF, 1, LPC.LNKB, Zero },
+                Package () { 0x000BFFFF, 2, LPC.LNKC, Zero },
+                Package () { 0x000BFFFF, 3, LPC.LNKD, Zero },
+
+                Package () { 0x000CFFFF, 0, LPC.LNKB, Zero },
+                Package () { 0x000CFFFF, 1, LPC.LNKC, Zero },
+                Package () { 0x000CFFFF, 2, LPC.LNKD, Zero },
+                Package () { 0x000CFFFF, 3, LPC.LNKE, Zero },
+
+                Package () { 0x000DFFFF, 0, LPC.LNKC, Zero },
+                Package () { 0x000DFFFF, 1, LPC.LNKD, Zero },
+                Package () { 0x000DFFFF, 2, LPC.LNKE, Zero },
+                Package () { 0x000DFFFF, 3, LPC.LNKF, Zero },
+
+                Package () { 0x000EFFFF, 0, LPC.LNKD, Zero },
+                Package () { 0x000EFFFF, 1, LPC.LNKE, Zero },
+                Package () { 0x000EFFFF, 2, LPC.LNKF, Zero },
+                Package () { 0x000EFFFF, 3, LPC.LNKG, Zero },
+
+                Package () { 0x000FFFFF, 0, LPC.LNKE, Zero },
+                Package () { 0x000FFFFF, 1, LPC.LNKF, Zero },
+                Package () { 0x000FFFFF, 2, LPC.LNKG, Zero },
+                Package () { 0x000FFFFF, 3, LPC.LNKH, Zero },
+
+                Package () { 0x0010FFFF, 0, LPC.LNKF, Zero },
+                Package () { 0x0010FFFF, 1, LPC.LNKG, Zero },
+                Package () { 0x0010FFFF, 2, LPC.LNKH, Zero },
+                Package () { 0x0010FFFF, 3, LPC.LNKA, Zero },
+
+                Package () { 0x0011FFFF, 0, LPC.LNKG, Zero },
+                Package () { 0x0011FFFF, 1, LPC.LNKH, Zero },
+                Package () { 0x0011FFFF, 2, LPC.LNKA, Zero },
+                Package () { 0x0011FFFF, 3, LPC.LNKB, Zero },
+
+                Package () { 0x0012FFFF, 0, LPC.LNKH, Zero },
+                Package () { 0x0012FFFF, 1, LPC.LNKA, Zero },
+                Package () { 0x0012FFFF, 2, LPC.LNKB, Zero },
+                Package () { 0x0012FFFF, 3, LPC.LNKC, Zero },
+
+                Package () { 0x0013FFFF, 0, LPC.LNKA, Zero },
+                Package () { 0x0013FFFF, 1, LPC.LNKB, Zero },
+                Package () { 0x0013FFFF, 2, LPC.LNKC, Zero },
+                Package () { 0x0013FFFF, 3, LPC.LNKD, Zero },
+
+                Package () { 0x0014FFFF, 0, LPC.LNKB, Zero },
+                Package () { 0x0014FFFF, 1, LPC.LNKC, Zero },
+                Package () { 0x0014FFFF, 2, LPC.LNKD, Zero },
+                Package () { 0x0014FFFF, 3, LPC.LNKE, Zero },
+
+                Package () { 0x0015FFFF, 0, LPC.LNKC, Zero },
+                Package () { 0x0015FFFF, 1, LPC.LNKD, Zero },
+                Package () { 0x0015FFFF, 2, LPC.LNKE, Zero },
+                Package () { 0x0015FFFF, 3, LPC.LNKF, Zero },
+
+                Package () { 0x0016FFFF, 0, LPC.LNKD, Zero },
+                Package () { 0x0016FFFF, 1, LPC.LNKE, Zero },
+                Package () { 0x0016FFFF, 2, LPC.LNKF, Zero },
+                Package () { 0x0016FFFF, 3, LPC.LNKG, Zero },
+
+                Package () { 0x0017FFFF, 0, LPC.LNKE, Zero },
+                Package () { 0x0017FFFF, 1, LPC.LNKF, Zero },
+                Package () { 0x0017FFFF, 2, LPC.LNKG, Zero },
+                Package () { 0x0017FFFF, 3, LPC.LNKH, Zero },
+
+                Package () { 0x0018FFFF, 0, LPC.LNKF, Zero },
+                Package () { 0x0018FFFF, 1, LPC.LNKG, Zero },
+                Package () { 0x0018FFFF, 2, LPC.LNKH, Zero },
+                Package () { 0x0018FFFF, 3, LPC.LNKA, Zero },
+
+                Package () { 0x0019FFFF, 0, LPC.LNKG, Zero },
+                Package () { 0x0019FFFF, 1, LPC.LNKH, Zero },
+                Package () { 0x0019FFFF, 2, LPC.LNKA, Zero },
+                Package () { 0x0019FFFF, 3, LPC.LNKB, Zero },
+
+                Package () { 0x001AFFFF, 0, LPC.LNKH, Zero },
+                Package () { 0x001AFFFF, 1, LPC.LNKA, Zero },
+                Package () { 0x001AFFFF, 2, LPC.LNKB, Zero },
+                Package () { 0x001AFFFF, 3, LPC.LNKC, Zero },
+
+                Package () { 0x001BFFFF, 0, LPC.LNKA, Zero },
+                Package () { 0x001BFFFF, 1, LPC.LNKB, Zero },
+                Package () { 0x001BFFFF, 2, LPC.LNKC, Zero },
+                Package () { 0x001BFFFF, 3, LPC.LNKD, Zero },
+
+                Package () { 0x001CFFFF, 0, LPC.LNKB, Zero },
+                Package () { 0x001CFFFF, 1, LPC.LNKC, Zero },
+                Package () { 0x001CFFFF, 2, LPC.LNKD, Zero },
+                Package () { 0x001CFFFF, 3, LPC.LNKE, Zero },
+
+                Package () { 0x001DFFFF, 0, LPC.LNKC, Zero },
+                Package () { 0x001DFFFF, 1, LPC.LNKD, Zero },
+                Package () { 0x001DFFFF, 2, LPC.LNKE, Zero },
+                Package () { 0x001DFFFF, 3, LPC.LNKF, Zero },
+
+                Package () { 0x001EFFFF, 0, LPC.LNKD, Zero },
+                Package () { 0x001EFFFF, 1, LPC.LNKE, Zero },
+                Package () { 0x001EFFFF, 2, LPC.LNKF, Zero },
+                Package () { 0x001EFFFF, 3, LPC.LNKG, Zero },
+
+                Package () { 0x001FFFFF, 0, LPC.LNKE, Zero },
+                Package () { 0x001FFFFF, 1, LPC.LNKF, Zero },
+                Package () { 0x001FFFFF, 2, LPC.LNKG, Zero },
+                Package () { 0x001FFFFF, 3, LPC.LNKH, Zero }
             })
             Name (APRT, Package ()
             {
-                Package () { 0x0003FFFF, Zero, Zero, 0x10 }, 
-                Package () { 0x0004FFFF, Zero, Zero, 0x11 },
-                Package () { 0x0005FFFF, Zero, Zero, 0x12 },
-                Package () { 0x0006FFFF, Zero, Zero, 0x13 }
+                Package () { 0x0000FFFF, 0, Zero, 0x15 },
+                Package () { 0x0000FFFF, 1, Zero, 0x16 },
+                Package () { 0x0000FFFF, 2, Zero, 0x17 },
+                Package () { 0x0000FFFF, 3, Zero, 0x10 },
+
+                Package () { 0x0001FFFF, 0, Zero, 0x16 },
+                Package () { 0x0001FFFF, 1, Zero, 0x17 },
+                Package () { 0x0001FFFF, 2, Zero, 0x10 },
+                Package () { 0x0001FFFF, 3, Zero, 0x11 },
+
+                Package () { 0x0002FFFF, 0, Zero, 0x17 },
+                Package () { 0x0002FFFF, 1, Zero, 0x10 },
+                Package () { 0x0002FFFF, 2, Zero, 0x11 },
+                Package () { 0x0002FFFF, 3, Zero, 0x12 },
+
+                Package () { 0x0003FFFF, 0, Zero, 0x10 },
+                Package () { 0x0003FFFF, 1, Zero, 0x11 },
+                Package () { 0x0003FFFF, 2, Zero, 0x12 },
+                Package () { 0x0003FFFF, 3, Zero, 0x13 },
+
+                Package () { 0x0004FFFF, 0, Zero, 0x11 },
+                Package () { 0x0004FFFF, 1, Zero, 0x12 },
+                Package () { 0x0004FFFF, 2, Zero, 0x13 },
+                Package () { 0x0004FFFF, 3, Zero, 0x14 },
+
+                Package () { 0x0005FFFF, 0, Zero, 0x12 },
+                Package () { 0x0005FFFF, 1, Zero, 0x13 },
+                Package () { 0x0005FFFF, 2, Zero, 0x14 },
+                Package () { 0x0005FFFF, 3, Zero, 0x15 },
+
+                Package () { 0x0006FFFF, 0, Zero, 0x13 },
+                Package () { 0x0006FFFF, 1, Zero, 0x14 },
+                Package () { 0x0006FFFF, 2, Zero, 0x15 },
+                Package () { 0x0006FFFF, 3, Zero, 0x16 },
+
+                Package () { 0x0007FFFF, 0, Zero, 0x14 },
+                Package () { 0x0007FFFF, 1, Zero, 0x15 },
+                Package () { 0x0007FFFF, 2, Zero, 0x16 },
+                Package () { 0x0007FFFF, 3, Zero, 0x17 },
+
+                Package () { 0x0008FFFF, 0, Zero, 0x15 },
+                Package () { 0x0008FFFF, 1, Zero, 0x16 },
+                Package () { 0x0008FFFF, 2, Zero, 0x17 },
+                Package () { 0x0008FFFF, 3, Zero, 0x10 },
+
+                Package () { 0x0009FFFF, 0, Zero, 0x16 },
+                Package () { 0x0009FFFF, 1, Zero, 0x17 },
+                Package () { 0x0009FFFF, 2, Zero, 0x10 },
+                Package () { 0x0009FFFF, 3, Zero, 0x11 },
+
+                Package () { 0x000AFFFF, 0, Zero, 0x17 },
+                Package () { 0x000AFFFF, 1, Zero, 0x10 },
+                Package () { 0x000AFFFF, 2, Zero, 0x11 },
+                Package () { 0x000AFFFF, 3, Zero, 0x12 },
+
+                Package () { 0x000BFFFF, 0, Zero, 0x10 },
+                Package () { 0x000BFFFF, 1, Zero, 0x11 },
+                Package () { 0x000BFFFF, 2, Zero, 0x12 },
+                Package () { 0x000BFFFF, 3, Zero, 0x13 },
+
+                Package () { 0x000CFFFF, 0, Zero, 0x11 },
+                Package () { 0x000CFFFF, 1, Zero, 0x12 },
+                Package () { 0x000CFFFF, 2, Zero, 0x13 },
+                Package () { 0x000CFFFF, 3, Zero, 0x14 },
+
+                Package () { 0x000DFFFF, 0, Zero, 0x12 },
+                Package () { 0x000DFFFF, 1, Zero, 0x13 },
+                Package () { 0x000DFFFF, 2, Zero, 0x14 },
+                Package () { 0x000DFFFF, 3, Zero, 0x15 },
+
+                Package () { 0x000EFFFF, 0, Zero, 0x13 },
+                Package () { 0x000EFFFF, 1, Zero, 0x14 },
+                Package () { 0x000EFFFF, 2, Zero, 0x15 },
+                Package () { 0x000EFFFF, 3, Zero, 0x16 },
+
+                Package () { 0x000FFFFF, 0, Zero, 0x14 },
+                Package () { 0x000FFFFF, 1, Zero, 0x15 },
+                Package () { 0x000FFFFF, 2, Zero, 0x16 },
+                Package () { 0x000FFFFF, 3, Zero, 0x17 },
+
+                Package () { 0x0010FFFF, 0, Zero, 0x15 },
+                Package () { 0x0010FFFF, 1, Zero, 0x16 },
+                Package () { 0x0010FFFF, 2, Zero, 0x17 },
+                Package () { 0x0010FFFF, 3, Zero, 0x10 },
+
+                Package () { 0x0011FFFF, 0, Zero, 0x16 },
+                Package () { 0x0011FFFF, 1, Zero, 0x17 },
+                Package () { 0x0011FFFF, 2, Zero, 0x10 },
+                Package () { 0x0011FFFF, 3, Zero, 0x11 },
+
+                Package () { 0x0012FFFF, 0, Zero, 0x17 },
+                Package () { 0x0012FFFF, 1, Zero, 0x10 },
+                Package () { 0x0012FFFF, 2, Zero, 0x11 },
+                Package () { 0x0012FFFF, 3, Zero, 0x12 },
+
+                Package () { 0x0013FFFF, 0, Zero, 0x10 },
+                Package () { 0x0013FFFF, 1, Zero, 0x11 },
+                Package () { 0x0013FFFF, 2, Zero, 0x12 },
+                Package () { 0x0013FFFF, 3, Zero, 0x13 },
+
+                Package () { 0x0014FFFF, 0, Zero, 0x11 },
+                Package () { 0x0014FFFF, 1, Zero, 0x12 },
+                Package () { 0x0014FFFF, 2, Zero, 0x13 },
+                Package () { 0x0014FFFF, 3, Zero, 0x14 },
+
+                Package () { 0x0015FFFF, 0, Zero, 0x12 },
+                Package () { 0x0015FFFF, 1, Zero, 0x13 },
+                Package () { 0x0015FFFF, 2, Zero, 0x14 },
+                Package () { 0x0015FFFF, 3, Zero, 0x15 },
+
+                Package () { 0x0016FFFF, 0, Zero, 0x13 },
+                Package () { 0x0016FFFF, 1, Zero, 0x14 },
+                Package () { 0x0016FFFF, 2, Zero, 0x15 },
+                Package () { 0x0016FFFF, 3, Zero, 0x16 },
+
+                Package () { 0x0017FFFF, 0, Zero, 0x14 },
+                Package () { 0x0017FFFF, 1, Zero, 0x15 },
+                Package () { 0x0017FFFF, 2, Zero, 0x16 },
+                Package () { 0x0017FFFF, 3, Zero, 0x17 },
+
+                Package () { 0x0018FFFF, 0, Zero, 0x15 },
+                Package () { 0x0018FFFF, 1, Zero, 0x16 },
+                Package () { 0x0018FFFF, 2, Zero, 0x17 },
+                Package () { 0x0018FFFF, 3, Zero, 0x10 },
+
+                Package () { 0x0019FFFF, 0, Zero, 0x16 },
+                Package () { 0x0019FFFF, 1, Zero, 0x17 },
+                Package () { 0x0019FFFF, 2, Zero, 0x10 },
+                Package () { 0x0019FFFF, 3, Zero, 0x11 },
+
+                Package () { 0x001AFFFF, 0, Zero, 0x17 },
+                Package () { 0x001AFFFF, 1, Zero, 0x10 },
+                Package () { 0x001AFFFF, 2, Zero, 0x11 },
+                Package () { 0x001AFFFF, 3, Zero, 0x12 },
+
+                Package () { 0x001BFFFF, 0, Zero, 0x10 },
+                Package () { 0x001BFFFF, 1, Zero, 0x11 },
+                Package () { 0x001BFFFF, 2, Zero, 0x12 },
+                Package () { 0x001BFFFF, 3, Zero, 0x13 },
+
+                Package () { 0x001CFFFF, 0, Zero, 0x11 },
+                Package () { 0x001CFFFF, 1, Zero, 0x12 },
+                Package () { 0x001CFFFF, 2, Zero, 0x13 },
+                Package () { 0x001CFFFF, 3, Zero, 0x14 },
+
+                Package () { 0x001DFFFF, 0, Zero, 0x12 },
+                Package () { 0x001DFFFF, 1, Zero, 0x13 },
+                Package () { 0x001DFFFF, 2, Zero, 0x14 },
+                Package () { 0x001DFFFF, 3, Zero, 0x15 },
+
+                Package () { 0x001EFFFF, 0, Zero, 0x13 },
+                Package () { 0x001EFFFF, 1, Zero, 0x14 },
+                Package () { 0x001EFFFF, 2, Zero, 0x15 },
+                Package () { 0x001EFFFF, 3, Zero, 0x16 },
+
+                Package () { 0x001FFFFF, 0, Zero, 0x14 },
+                Package () { 0x001FFFFF, 1, Zero, 0x15 },
+                Package () { 0x001FFFFF, 2, Zero, 0x16 },
+                Package () { 0x001FFFFF, 3, Zero, 0x17 }
             })
             Method (_PRT, 0, NotSerialized)
             {
